@@ -358,6 +358,9 @@ parentViewController:(UIViewController*)parentViewController
 
 //--------------------------------------------------------------------------
 - (void)openDialog {
+	if (@available(iOS 13.0, *)) {
+        [self.viewController setModalPresentationStyle:UIModalPresentationFullScreen];
+    }
     [self.parentViewController
      presentViewController:self.viewController
      animated:self.isTransitionAnimated completion:nil
@@ -933,19 +936,6 @@ parentViewController:(UIViewController*)parentViewController
     self.toolbar.items = items;
     [overlayView addSubview: self.toolbar];
 
-    UIImage* reticleImage = [self buildReticleImage];
-    self.reticleView = [[UIImageView alloc] initWithImage:reticleImage];
-
-    self.reticleView.opaque           = NO;
-    self.reticleView.contentMode      = UIViewContentModeScaleAspectFit;
-    self.reticleView.autoresizingMask = (UIViewAutoresizing) (0
-        | UIViewAutoresizingFlexibleLeftMargin
-        | UIViewAutoresizingFlexibleRightMargin
-        | UIViewAutoresizingFlexibleTopMargin
-        | UIViewAutoresizingFlexibleBottomMargin)
-    ;
-
-    [overlayView addSubview: self.reticleView];
     [self resizeElements];
     return overlayView;
 }
